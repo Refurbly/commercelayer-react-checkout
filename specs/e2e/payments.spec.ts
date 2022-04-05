@@ -360,8 +360,8 @@ test.describe("customer with Braintree", () => {
     const element = await checkoutPage.page.locator(
       "[data-test-id=payment-save-wallet]"
     )
-    expect(element).toBeVisible()
-    expect(element).not.toBeChecked()
+    await expect(element).toBeVisible()
+    await expect(element).not.toBeChecked()
     await checkoutPage.checkButton({ type: "Payment", status: "disabled" })
 
     await checkoutPage.setPayment("braintree")
@@ -397,8 +397,8 @@ test.describe("customer with Braintree", () => {
     const element = await checkoutPage.page.locator(
       "[data-test-id=payment-save-wallet]"
     )
-    expect(element).toBeVisible()
-    expect(element).not.toBeChecked()
+    await expect(element).toBeVisible()
+    await expect(element).not.toBeChecked()
     await element.check()
 
     await checkoutPage.setPayment("braintree")
@@ -433,6 +433,8 @@ test.describe("customer with Braintree", () => {
     await checkoutPage.page.click("[data-test-id=customer-card]", {
       force: true,
     })
+
+    await checkoutPage.page.waitForTimeout(2000)
 
     await checkoutPage.save("Payment", undefined, true)
 
