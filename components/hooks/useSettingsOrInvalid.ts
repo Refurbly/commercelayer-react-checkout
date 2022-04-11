@@ -5,7 +5,7 @@ import useSWR from "swr"
 const fetcher = (url: string) => fetch(url).then((r) => r.json())
 
 interface UseSettingsOrInvalid {
-  settings: CheckoutSettings | undefined
+  settings?: CheckoutSettings
   isLoading: boolean
 }
 
