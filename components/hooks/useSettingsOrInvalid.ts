@@ -4,17 +4,18 @@ import useSWR from "swr"
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json())
 
-interface UseSettingsOrInvalid {
-  settings: CheckoutSettings | undefined
-  isLoading: boolean
-}
+// interface UseSettingsOrInvalid {
+//   settings: CheckoutSettings | undefined
+//   isLoading: boolean
+// }
 
-export const useSettingsOrInvalid = (): UseSettingsOrInvalid => {
+export const useSettingsOrInvalid = (accessToken) => {
   const random = useRef(Date.now())
   const router = useRouter()
-  const { orderId, accessToken, paymentReturn } = router.query
+  const { orderId, paymentReturn } = router.query
   const paymentReturnQuery =
     paymentReturn === "true" ? "&paymentReturn=true" : ""
+  console.log("accessToken", accessToken)
   const { data, error } = useSWR(
     router.isReady
       ? [

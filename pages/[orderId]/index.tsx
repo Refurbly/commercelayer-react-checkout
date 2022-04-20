@@ -1,8 +1,22 @@
+import { getSalesChannelToken } from "@commercelayer/js-auth"
 import { NextPage } from "next"
 import dynamic from "next/dynamic"
 
 import CheckoutSkeleton from "components/composite/CheckoutSkeleton"
 import { useSettingsOrInvalid } from "components/hooks/useSettingsOrInvalid"
+
+const getToken = async (market?: string) => {
+  const clientId = process.env.NEXT_PUBLIC_CLIENT_ID as string
+  const endpoint = process.env.NEXT_PUBLIC_ENDPOINT as string
+  const scope = market || (process.env.NEXT_PUBLIC_MARKET_ID as string)
+
+  const data = await getSalesChannelToken({
+    clientId,
+    endpoint,
+    scope,
+  })
+  return data?.accessToken as string
+}
 
 const DynamicCheckoutContainer = dynamic(
   () => import("components/composite/CheckoutContainer"),
@@ -19,8 +33,8 @@ const DynamicCheckout = dynamic(() => import("components/composite/Checkout"), {
 })
 
 CheckoutSkeleton.displayName = "Skeleton Loader"
-const Home: NextPage = () => {
-  const { settings, isLoading } = useSettingsOrInvalid()
+const Home: NextPage = ({ accessToken }) => {
+  const { settings, isLoading } = useSettingsOrInvalid(accessToken)
 
   if (isLoading || !settings) return <CheckoutSkeleton />
 
@@ -37,6 +51,11 @@ const Home: NextPage = () => {
       />
     </DynamicCheckoutContainer>
   )
+}
+
+Home.getInitialProps = async () => {
+  const accessToken = await getToken()
+  return { accessToken }
 }
 
 export default Home
