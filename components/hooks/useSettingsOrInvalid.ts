@@ -31,7 +31,7 @@ export const useSettingsOrInvalid = (): UseSettingsOrInvalid => {
   }
 
   if (error || (data && !data.validCheckout)) {
-    router.push("/404")
+    // router.push("/404")
     return { settings: undefined, isLoading: false }
   }
 
