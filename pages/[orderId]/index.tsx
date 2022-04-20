@@ -32,8 +32,12 @@ const DynamicCheckout = dynamic(() => import("components/composite/Checkout"), {
   },
 })
 
+interface AccessToken {
+  accessToken: string
+}
+
 CheckoutSkeleton.displayName = "Skeleton Loader"
-const Home: NextPage = ({ accessToken }) => {
+const Home: NextPage<AccessToken> = ({ accessToken }) => {
   const { settings, isLoading } = useSettingsOrInvalid(accessToken)
 
   if (isLoading || !settings) return <CheckoutSkeleton />

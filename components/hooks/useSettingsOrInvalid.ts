@@ -9,7 +9,7 @@ const fetcher = (url: string) => fetch(url).then((r) => r.json())
 //   isLoading: boolean
 // }
 
-export const useSettingsOrInvalid = (accessToken) => {
+export const useSettingsOrInvalid = (accessToken: string) => {
   const random = useRef(Date.now())
   const router = useRouter()
   const { orderId, paymentReturn } = router.query
