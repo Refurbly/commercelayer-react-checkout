@@ -4,7 +4,7 @@ import dynamic from "next/dynamic"
 
 import CheckoutSkeleton from "components/composite/CheckoutSkeleton"
 import { useSettingsOrInvalid } from "components/hooks/useSettingsOrInvalid"
-
+// Little necessary change
 const getToken = async (market?: string) => {
   const clientId = process.env.NEXT_PUBLIC_CLIENT_ID as string
   const endpoint = process.env.NEXT_PUBLIC_ENDPOINT as string
@@ -26,6 +26,7 @@ const DynamicCheckoutContainer = dynamic(
     },
   }
 )
+
 const DynamicCheckout = dynamic(() => import("components/composite/Checkout"), {
   loading: function LoadingSkeleton() {
     return <CheckoutSkeleton />
